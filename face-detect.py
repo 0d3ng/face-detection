@@ -1,14 +1,3 @@
-"""
-  face-detection
-  
-  Copyright (c) 2018
-  All rights reserved.
-  Written by od3ng created on 21/11/18 21.47
-  Email   : lepengdados@gmail.com
-  Github  : 0d3ng
-  Hp      : 085878554150
- """
-
 #  Created by od3ng on 12/03/2019 01:17:43 PM.
 #  Project: face-detection
 #  File: face-detect.py

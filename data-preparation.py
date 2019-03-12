@@ -5,13 +5,6 @@
 #  Telegram: @nopriant0
 #
 
-#  Created by od3ng on 12/03/2019 10:47:52 AM.
-#  Project: face-detection
-#  File: data-preparation.py
-#  Email: lepengdados@gmail.com
-#  Telegram: @nopriant0
-#
-
 import os
 import pickle
 import random

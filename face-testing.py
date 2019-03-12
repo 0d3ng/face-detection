@@ -5,20 +5,6 @@
 #  Telegram: @nopriant0
 #
 
-#  Created by od3ng on 12/03/2019 02:07:10 PM.
-#  Project: face-detection
-#  File: face-testing.py
-#  Email: lepengdados@gmail.com
-#  Telegram: @nopriant0
-#
-
-#  Created by od3ng on 12/03/2019 01:19:17 PM.
-#  Project: face-detection
-#  File: face-testing.py
-#  Email: lepengdados@gmail.com
-#  Telegram: @nopriant0
-#
-
 import os
 import time
 
@@ -29,7 +15,7 @@ import tensorflow as tf
 cap = cv2.VideoCapture(0)
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 model = tf.keras.models.load_model("face.model")
-cv2.namedWindow("face detection", cv2.WINDOW_GUI_EXPANDED)
+cv2.namedWindow("face testing", cv2.WINDOW_GUI_EXPANDED)
 
 data_dir = "dataset/grayscale"
 dirs = []
@@ -66,7 +52,7 @@ while True:
                         cv2.FONT_HERSHEY_PLAIN, 2,
                         (0, 0, 255), 2)
 
-    cv2.imshow("face detection", frame)
+    cv2.imshow("face testing", frame)
     time.sleep(0.25)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break

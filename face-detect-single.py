@@ -5,13 +5,6 @@
 #  Telegram: @nopriant0
 #
 
-#  Created by od3ng on 12/03/2019 11:42:15 AM.
-#  Project: face-detection
-#  File: face-detect-single.py
-#  Email: lepengdados@gmail.com
-#  Telegram: @nopriant0
-#
-
 import cv2
 
 input_image = 'dataset/source/alan_grant/'
