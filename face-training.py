@@ -5,13 +5,6 @@
 #  Telegram: @nopriant0
 #
 
-#  Created by od3ng on 12/03/2019 01:11:44 PM.
-#  Project: face-detection
-#  File: face-training.py
-#  Email: lepengdados@gmail.com
-#  Telegram: @nopriant0
-#
-
 import pickle
 
 from keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense, ZeroPadding2D
@@ -29,8 +22,8 @@ Y = to_categorical(Y)
 
 X = X / 255.0
 
-width = 100
-height = 100
+width, height = 100, 100
+class_number = 6
 
 inputs = Input(shape=(width, height, 1))
 conv_layer = ZeroPadding2D(padding=(2, 2))(inputs)
@@ -45,7 +38,7 @@ flaten = Flatten()(conv_layer)
 
 fc_layer = Dense(256, activation='relu')(flaten)
 fc_layer = Dense(64, activation='relu')(fc_layer)
-outputs = Dense(6, activation='softmax')(fc_layer)
+outputs = Dense(class_number, activation='softmax')(fc_layer)
 
 adam = Adam(lr=0.0001)
 model = Model(inputs=inputs, outputs=outputs)

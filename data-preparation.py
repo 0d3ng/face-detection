@@ -17,8 +17,7 @@ DATADIR = "dataset/grayscale"
 dirs = []
 
 training_data = []
-width = 100
-height = 100
+width, height = 100, 100
 
 for dir_name in sorted(os.listdir(DATADIR)):
     dirs.append(dir_name)

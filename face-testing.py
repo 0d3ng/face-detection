@@ -23,8 +23,7 @@ dirs = []
 for dir_name in sorted(os.listdir(data_dir)):
     dirs.append(dir_name)
 
-width = 100
-height = 100
+width, height = 100, 100
 
 while True:
     ret, frame = cap.read()
