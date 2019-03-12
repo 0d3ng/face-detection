@@ -9,9 +9,17 @@
   Hp      : 085878554150
  """
 
-import cv2
-from datetime import datetime
+#  Created by od3ng on 12/03/2019 03:38:43 PM.
+#  Project: face-detection
+#  File: face-detect-live.py
+#  Email: lepengdados@gmail.com
+#  Telegram: @nopriant0
+#
+
 import time
+from datetime import datetime
+
+import cv2
 
 cap = cv2.VideoCapture(0)
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -39,12 +47,11 @@ while (True):
     # Draw a rectangle around the faces
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 1)
-
-    if len(faces) > 0:
-        crop = gray.copy()[y:y + h, x:x + w]
-        cv2.imwrite("dataset/" + datetime.now().strftime('%Y%m%d%H%M%S%f') + ".jpg", crop)
-        captured = captured + 1
-        # time.sleep(0.25)
+        if len(faces) > 0:
+            crop = gray.copy()[y:y + h, x:x + w]
+            cv2.imwrite("dataset/" + datetime.now().strftime('%Y%m%d%H%M%S%f') + ".jpg", crop)
+            captured = captured + 1
+            # time.sleep(0.25)
     # Display the resulting frame
     cv2.imshow('frame', frame)
     time.sleep(0.25)
