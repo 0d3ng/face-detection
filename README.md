@@ -5,5 +5,5 @@ Sample face detection using opencv
 1. ```mkdir face-detection```
 2. ```virtualenv --python=python3.7 face-detection```
 3. ```source face-detection/bin/activate```
-4. ```pip install opencv-python```
-5. ```mkdir dataset```
+3. ```mkdir dataset```
+4. Install all packet needed using command ```pip install -r requirements.txt```
