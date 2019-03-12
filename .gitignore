@@ -27,8 +27,6 @@
 /logs/
 /exported/
 /target/
-/zipper/
-/log/
 
 ### venv ###
 /include/
@@ -37,4 +35,3 @@
 
 ### dataset no needed ###
 /dataset/
-/test/

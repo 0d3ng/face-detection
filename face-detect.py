@@ -17,7 +17,7 @@ harr_path = 'haarcascade_frontalface_default.xml'
 # create the haara cascade
 faceCascade = cv2.CascadeClassifier(harr_path)
 
-image = cv2.imread(input_image)
+image = cv2.imread("sumbing.jpeg")
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 # Detect faces in the image
