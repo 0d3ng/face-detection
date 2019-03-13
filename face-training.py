@@ -23,7 +23,7 @@ Y = to_categorical(Y)
 X = X / 255.0
 
 width, height = 100, 100
-class_number = 6
+class_number = 8
 
 inputs = Input(shape=(width, height, 1))
 conv_layer = ZeroPadding2D(padding=(2, 2))(inputs)

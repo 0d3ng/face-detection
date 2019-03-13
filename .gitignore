@@ -35,3 +35,7 @@
 
 ### dataset no needed ###
 /dataset/
+
+### model ignore ###
+*.pickle
+*.model
