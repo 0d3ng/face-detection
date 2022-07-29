@@ -5,14 +5,12 @@
 #  Telegram: @nopriant0
 #
 
-import os
 import time
 
 import cv2
 import numpy as np
-from keras.applications.vgg19 import preprocess_input
 from keras.models import load_model
-from tensorflow.keras.preprocessing import image
+from PIL import Image
 
 cap = cv2.VideoCapture(0)
 
@@ -23,14 +21,12 @@ fc = 0
 FPS = 0
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-model = load_model("save_model.h5")
+# model = load_model("save_model.h5")
+model = load_model("bahit_model_v2.h5")
 cv2.namedWindow("face testing", cv2.WINDOW_GUI_EXPANDED)
 
-data_dir = "dataset/output"
-dirs = []
 
-for dir_name in sorted(os.listdir(data_dir)):
-    dirs.append(dir_name)
+class_names = ['alvin', 'amy', 'anti', 'bahit', 'farida', 'hafizi']
 
 width, height = 160, 160
 
@@ -59,19 +55,26 @@ while True:
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
         if len(faces) > 0:
-            new_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            crop = new_frame.copy()[y:y + h, x:x + w]
-            img_array = cv2.resize(crop.copy(), (width, height))
-            x_img = image.img_to_array(img_array)
-            x_img = np.expand_dims(x_img, axis=0)
-            x_img = preprocess_input(x_img)
-            y_prob = model.predict(x_img)
-            y_class = y_prob.argmax(axis=-1)
+            # Convert the captured frame into RGB
+            crop = frame.copy()[y:y + h, x:x + w]
+            im = Image.fromarray(frame, 'RGB')
+            # Resizing into dimensions you used while training
+            im = im.resize((width, height))
+            img_array = np.array(im)
+
+            # Expand dimensions to match the 4D Tensor shape.
+            img_array = np.expand_dims(img_array, axis=0)
+
+            # Calling the predict function using keras
+            prediction = model.predict(img_array)  # [0][0]
+            print(prediction)
+
+            y_class = prediction.argmax(axis=-1)
             y_class = y_class[0]
-            y_confidence = y_prob[0][y_class] * 100
+            y_confidence = prediction[0][y_class] * 100
             print("predicted label: {} (prob = {})".format(y_class, y_confidence))
-            print("index {}, name is {}".format(y_class, dirs[y_class]))
-            text = "{} {}%".format(dirs[y_class], "{:.2f}".format(y_confidence))
+            print("index {}, name is {}".format(y_class, class_names[y_class]))
+            text = "{} {}%".format(class_names[y_class], "{:.2f}".format(y_confidence))
             print("text {}".format(text))
             cv2.putText(frame, text, (int(x), int(y - 5)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1)
 
