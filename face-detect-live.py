@@ -10,6 +10,39 @@ from datetime import datetime
 
 import cv2
 
+import paho.mqtt.client as mqtt
+import uuid
+import base64
+
+
+# connected = False
+
+
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Connected to broker")
+        global connected
+        connected = True
+        print(connected)
+    else:
+        print("Connection failed")
+
+
+connected = False
+time_millis = 0
+delay = 10  # in seconds
+
+client = mqtt.Client("my_client_" + str(uuid.uuid4().hex))
+client.on_connect = on_connect
+client.connect("localhost", 1883)
+client.loop_start()
+
+print(connected)
+
+while not connected:
+    print(connected)
+    time.sleep(0.1)
+
 cap = cv2.VideoCapture(0)
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 captured = 0
@@ -39,7 +72,16 @@ while True:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
         if len(faces) > 0:
             crop = gray.copy()[y:y + h, x:x + w]
-            cv2.imwrite("dataset/" + datetime.now().strftime('%Y%m%d%H%M%S%f') + ".jpg", crop)
+            encode = cv2.imencode(".jpg", crop)[1]
+            img_str = base64.b64encode(encode.tobytes())
+            # print(img_str.decode())
+            # cv2.imwrite("dataset/" + datetime.now().strftime('%Y%m%d%H%M%S%f') + ".jpg", crop)
+            current_seconds = round(time.time() * 1000) / 1000
+            if (current_seconds - time_millis) > delay:
+                print("Publish data {0}".format(img_str.decode()))
+                client.publish(topic="/data/img", payload=img_str.decode().encode('utf-8'), qos=0)
+                time_millis = current_seconds
+
             captured = captured + 1
             cv2.putText(frame, "Face found!".format(captured), (x, y - 30),
                         cv2.FONT_HERSHEY_PLAIN, 2,
@@ -57,3 +99,4 @@ while True:
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
+client.loop_stop()
